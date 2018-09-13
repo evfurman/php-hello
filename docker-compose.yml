@@ -3,6 +3,9 @@ version: '3'
 services:
   web:
     image: nginx:alpine
+    restart: always
+    depends_on:
+      - php
     ports: 
       - '8080:80'
     volumes:
@@ -11,5 +14,6 @@ services:
 
   php:
     image: php:fpm-alpine
+    restart: always
     volumes:
       - ./hello.php:/usr/local/lib/index.php

@@ -503,7 +503,7 @@ Resources:
 
             # install docker-ce  
             apt-get update -y
-            apt-get install docker-ce  
+            apt-get install -y docker-ce  
             
             # install docker-compose
             curl -L "https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -539,12 +539,22 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup 
     Properties:
       Name: php-hello
-      Port: 80
+      Port: 8080
       Protocol: HTTP
       Tags:
       - Key: Name
         Value: 'php-hello'
       VpcId: !Ref VPC
+
+  ALBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        Type: forward 
+        TargetGroupArn: !Ref ALBTargetGroup
+      LoadBalancerArn: !Ref ALB
+      Port: '80'
+      Protocol: HTTP 
 
   ALB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -604,17 +614,3 @@ Resources:
       StorageType: gp2
       VPCSecurityGroups:
       - !Ref DBSecurityGroup      
-
-Outputs:
-
-  SubnetIds:
-    Description: All subnets in the VPC
-    Value: !Join [ ",", [ !Ref Subnet01, !Ref Subnet02, !Ref Subnet03, !Ref Subnet04, !Ref Subnet05, !Ref Subnet06 ] ]
-
-  SecurityGroups:
-    Description: Security group for the cluster control plane communication with worker nodes
-    Value: !Join [ ",", [ !Ref WebserverSecurityGroup ] ]
-
-  VpcId:
-    Description: The VPC Id
-    Value: !Ref VPC
