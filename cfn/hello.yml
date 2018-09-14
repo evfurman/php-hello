@@ -457,6 +457,7 @@ Resources:
 
   WebserverGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
+    DependsOn: !Ref WebserverLaunchConfig
     Properties:
       DesiredCapacity: 2
       LaunchConfigurationName: !Ref WebserverLaunchConfig
@@ -479,6 +480,7 @@ Resources:
 
   WebserverLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
+    DependsOn: !Ref DBInstance
     Properties:
       ImageId: !FindInMap [ AWSRegionToAMI, !Ref "AWS::Region", AMI ]
       InstanceType: !Ref WebserverInstanceType
