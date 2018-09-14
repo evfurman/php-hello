@@ -451,8 +451,8 @@ Resources:
       VpcId: !Ref VPC
       SecurityGroupIngress:
       - IpProtocol: tcp
-        FromPort: 80
-        ToPort: 80
+        FromPort: 8080
+        ToPort: 8080
         SourceSecurityGroupId: !Ref ALBSecurityGroup
 
   WebserverGroup:
@@ -550,7 +550,7 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       DefaultActions:
-        Type: forward 
+      - Type: forward 
         TargetGroupArn: !Ref ALBTargetGroup
       LoadBalancerArn: !Ref ALB
       Port: '80'
