@@ -5,4 +5,4 @@ RUN apk add --update postgresql-dev \
     && apk del \
 	postgresql-libs \
 	libsasl \
-	db \
+	db

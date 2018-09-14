@@ -457,7 +457,7 @@ Resources:
 
   WebserverGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
-    DependsOn: !Ref WebserverLaunchConfig
+    DependsOn: WebserverLaunchConfig
     Properties:
       DesiredCapacity: 2
       LaunchConfigurationName: !Ref WebserverLaunchConfig
@@ -480,7 +480,7 @@ Resources:
 
   WebserverLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
-    DependsOn: !Ref DBInstance
+    DependsOn: DBInstance
     Properties:
       ImageId: !FindInMap [ AWSRegionToAMI, !Ref "AWS::Region", AMI ]
       InstanceType: !Ref WebserverInstanceType
@@ -494,8 +494,9 @@ Resources:
             DeleteOnTermination: true
       UserData:
         Fn::Base64:
-          !Sub |
-            #!/bin/bash
+          Fn::Sub:
+          - |
+            #!/bin/bash -ex
             
             # apt stuff
             apt-get update -y
@@ -517,13 +518,19 @@ Resources:
             curl -O https://raw.githubusercontent.com/evfurman/php-hello/master/hello.php -o /root/
 
             # add db credentials
-            sed -i "s/db_host/!GetAtt DBInstance.Endpoint.Address/g" hello.php
-            sed -i "s/db_name/!Ref DBMasterDatabase/g" hello.php
-            sed -i "s/db_user/!Ref DBMasterUsername/g" hello.php
-            sed -i "s/db_pass/!Ref DBMasterPassword/g" hello.php
+            sed -i "s/db_host/${DBHost}/g" hello.php
+            sed -i "s/db_name/${DBDatabase}/g" hello.php
+            sed -i "s/db_user/${DBUsername}/g" hello.php
+            sed -i "s/db_pass/${DBPassword}/g" hello.php
 
             # bring up the containers
             docker-compose -f docker-compose.yml up -d
+          - {
+            DBHost: !GetAtt DBInstance.Endpoint.Address,
+            DBDatabase: !Ref DBMasterDatabase,    
+            DBUsername: !Ref DBMasterUsername,
+            DBPassword: !Ref DBMasterPassword
+            }  
 
   ALBSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -615,4 +622,4 @@ Resources:
       PreferredMaintenanceWindow: 'sat:04:00-sat:04:30'
       StorageType: gp2
       VPCSecurityGroups:
-      - !Ref DBSecurityGroup      
+      - !Ref DBSecurityGroups

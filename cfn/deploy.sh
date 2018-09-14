@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # title: deploy.sh
-# description: Deploy Script for EKS Cluster, NodeGroup and Network
+# description: Deploy Script for php-hello
 # author: evfurman@gmail.com
 
 # Define Params
