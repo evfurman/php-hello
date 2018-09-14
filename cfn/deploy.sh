@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # title: deploy.sh
 # description: Deploy Script for php-hello
 # author: evfurman@gmail.com
