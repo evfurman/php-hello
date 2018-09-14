@@ -622,4 +622,4 @@ Resources:
       PreferredMaintenanceWindow: 'sat:04:00-sat:04:30'
       StorageType: gp2
       VPCSecurityGroups:
-      - !Ref DBSecurityGroups
+      - !Ref DBSecurityGroup
