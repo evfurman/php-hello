@@ -1,5 +1,5 @@
 <?php
-echo 'hello world';
+echo 'hello world\n\n';
 
 $dbname = 'db_name';
 $dbuser = 'db_user';
@@ -8,9 +8,9 @@ $dbhost = 'db_host';
 
 $connection = pg_connect ("host=$dbhost dbname=$dbname user=$dbuser password=$dbpass");
 if($connection) {
-    echo 'connected';
+    echo 'connected to postgres\n';
 } else {
-    echo 'there has been an error connecting';
+    echo 'there has been an error connecting to postgres\n';
 }
 
 ?>
