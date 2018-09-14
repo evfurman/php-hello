@@ -8,4 +8,8 @@ PHP Hello is a fun little exercise in automating the deployment of a PHP webapp 
 
 1.) Deploy the Cloudformation template
 
-`cd cfn && ./deploy.sh`  
+`cd cfn && ./deploy.sh` 
+
+2.) Test
+
+`curl $(aws elbv2 describe-load-balancers --names php-hello | jq -r '.LoadBalancers[0].DNSName')`
