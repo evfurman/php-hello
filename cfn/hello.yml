@@ -198,43 +198,43 @@ Resources:
         Value: !Ref VpcName
 
   InternetGateway:
-    Type: "AWS::EC2::InternetGateway"
+    Type: AWS::EC2::InternetGateway
 
   Eip01:
-    Type: "AWS::EC2::EIP"
+    Type: AWS::EC2::EIP
     Properties:
       Domain: vpc
 
   Eip02:
-    Type: "AWS::EC2::EIP"
+    Type: AWS::EC2::EIP
     Properties:
       Domain: vpc
 
   Eip03:
-    Type: "AWS::EC2::EIP"
+    Type: AWS::EC2::EIP
     Properties:
       Domain: vpc
 
   NatGateway01:
-    Type: "AWS::EC2::NatGateway"
+    Type: AWS::EC2::NatGateway
     Properties:
       AllocationId: !GetAtt Eip01.AllocationId
       SubnetId: !Ref Subnet04
   
   NatGateway02:
-    Type: "AWS::EC2::NatGateway"
+    Type: AWS::EC2::NatGateway
     Properties:
       AllocationId: !GetAtt Eip02.AllocationId
       SubnetId: !Ref Subnet05
 
   NatGateway03:
-    Type: "AWS::EC2::NatGateway"
+    Type: AWS::EC2::NatGateway
     Properties:
       AllocationId: !GetAtt Eip03.AllocationId
       SubnetId: !Ref Subnet06
 
   VPCGatewayAttachment:
-    Type: "AWS::EC2::VPCGatewayAttachment"
+    Type: AWS::EC2::VPCGatewayAttachment
     Properties:
       InternetGatewayId: !Ref InternetGateway
       VpcId: !Ref VPC
@@ -582,7 +582,7 @@ Resources:
       Type: application 
 
   DBSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: php-hello-db
       GroupDescription: DB security group
@@ -594,7 +594,7 @@ Resources:
         SourceSecurityGroupId: !Ref WebserverSecurityGroup
 
   DBSubnetGroup:
-    Type: 'AWS::RDS::DBSubnetGroup'
+    Type: AWS::RDS::DBSubnetGroup
     Properties:
       DBSubnetGroupName: php-hello
       DBSubnetGroupDescription: RDS subnet group
@@ -604,7 +604,7 @@ Resources:
       - !Ref Subnet03  
 
   DBInstance:
-    Type: 'AWS::RDS::DBInstance'
+    Type: AWS::RDS::DBInstance
     Properties:
       AllocatedStorage: '20'
       AllowMajorVersionUpgrade: false

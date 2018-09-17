@@ -1,6 +1,6 @@
 PHP Hello is a fun little exercise in automating the deployment of a PHP webapp using docker-compose.
 
-*DEPENDENCIES:*
+## Dependencies:
 
 - [awscli](https://aws.amazon.com/cli/)
 
